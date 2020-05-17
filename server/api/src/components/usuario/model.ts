@@ -1,5 +1,4 @@
 import * as mongoose from "mongoose";
-import bcrypt from 'bcryptjs';
 
 export const UsuarioSchema = new mongoose.Schema({
     nombre:{ type: String, required: true },
@@ -18,15 +17,6 @@ export const UsuarioSchema = new mongoose.Schema({
 },{
     timestamps:true
 });
-
-UsuarioSchema.methods.encryptPassword = async (password:any) => {
-    let salt = await bcrypt.genSalt(10);
-    return await bcrypt.hash(password,salt);
-}
-
-UsuarioSchema.methods.compare = async function(password:any){
-    return await bcrypt.compare(password,this.password);
-}
 
 const model = mongoose.model("usuario", UsuarioSchema,"usuario");
 
