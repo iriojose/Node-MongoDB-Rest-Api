@@ -1,0 +1,30 @@
+{
+    "name": "servidor",
+    "version": "1.0.0",
+    "description": "Rest-Api-node-mongoDB",
+    "main": "index.js",
+    "scripts": {
+        "start": "node server/api/dist/index.js",
+        "build": "tsc -p ./server/api/tsconfig.json",
+        "clean": "rimraf ./server/api/dist"
+    },
+    "author": "Irio Gómez",
+    "license": "ISC",
+    "dependencies": {
+        "@types/cors": "^2.8.6",
+        "@types/dotenv": "^8.2.0",
+        "@types/express": "^4.17.6",
+        "@types/mongoose": "^5.7.20",
+        "@types/morgan": "^1.9.0",
+        "@types/multer": "^1.4.3",
+        "cors": "^2.8.5",
+        "cross-env": "^7.0.2",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "mongoose": "^5.9.14",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.2",
+        "rimraf": "^3.0.2",
+        "typescript": "^3.9.2"
+    }
+}
