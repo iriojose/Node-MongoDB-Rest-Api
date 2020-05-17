@@ -73,10 +73,11 @@ export const deleteOne = async (id:any):Promise<any> => {
 
 export const update = async (id:any,data:any):Promise<any> => {
     try {   
-        let concepto = await conceptos.findByIdAndUpdate(id, (err:any) => {
-
+        let concepto = await conceptos.findByIdAndUpdate({"_id":id},data,(err:any,response:any) => {
+            if (err) return respuestas.InternalServerError;
         });
-
+        let response = Object.assign({ message: respuestas.Update.message,concepto});
+        return { response, code: respuestas.Update.code };
     }catch (error) {
         if (error.message === 'DB_SYNTAX_ERROR') return respuestas.BadRequest;
         console.log(`Error en el controlador Conceptos, error: ${error}`);
