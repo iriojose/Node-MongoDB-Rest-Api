@@ -12,6 +12,7 @@
     "author": "Irio Gómez",
     "license": "ISC",
     "dependencies": {
+        "@types/bcryptjs": "^2.4.2",
         "@types/cors": "^2.8.6",
         "@types/dotenv": "^8.2.0",
         "@types/express": "^4.17.6",
