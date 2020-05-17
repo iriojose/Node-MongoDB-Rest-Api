@@ -1,60 +1,6 @@
 import * as mongoose from "mongoose";
-
-export interface IConceptos extends mongoose.Document {
-    empresa_id:string ,
-    codigo?:string ,
-    referencia?: string ,
-    nombre: string,
-    descripcion?: string,
-    talla?: string,
-    color?: string,
-    descuento?:number,
-    serial_estatico?: number,
-    serial_dinamico?: number,
-    existencia_minima?: number,
-    existencia_maxima?: number,
-    tipos_conceptos_id: string,
-    ubicacion_id?:  string,
-    costo?: number,
-    ultimo_costo?: number,
-    costo_mayor?: number,
-    costo_promedio?: number,
-    grupos_id?: string,
-    subgrupos_id?: string,
-    unidades_id?: string,
-    marcas_id?: string,
-    estado?: number,
-    pvp?:number,
-    precio_a:number,
-    precion_b?:number,
-    precio_dolar:number,
-    utilidad?:number,
-    utiliad_a?:number,
-    utilidad_b?:number,
-    utilidad_c?:number,
-    utilidad_dolar?:number,
-    costo_dolar:number,
-    precio_variante?:number,
-    retiene?: number,
-    farm_principio_activo_id?: number,
-    imagen?:string,
-    costo_adicional?: number,
-    costo_adicional2?:number,
-    cant_ensamblado?:number,
-    licor?: number,
-    porcentaje?:number,
-    visible_pv?: number,
-    visible_web?: number,
-    rest_areas_id?: number ,
-    setcortesia?: number,
-    exento?: number,
-    merma?: number,
-    exitencia_c?: number,
-    obviar_ajuste?: number,
-    iva?:number,
-}
   
-export const ConceptoSchema = new mongoose.Schema({
+export const conceptoSchema = new mongoose.Schema({
     empresa_id:{ type: String, required: true },
     codigo:{ type: String, required: false },
     referencia: { type: String, required: false},
@@ -106,9 +52,11 @@ export const ConceptoSchema = new mongoose.Schema({
     exitencia_c: { type: Number, required: false },
     obviar_ajuste: { type: Number, required: false },
     iva:{ type: Number, required: false },
+},{
+    timestamps:true
 });
   
+const model = mongoose.model("conceptos", conceptoSchema,"conceptos");
 
-const Conceptos = mongoose.model<IConceptos>("Conceptos", ConceptoSchema);
+export default model;
 
-export default Conceptos;

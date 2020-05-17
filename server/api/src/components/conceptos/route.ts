@@ -1,30 +1,72 @@
 import  { Router,Request,Response } from 'express';
-import Conceptos from './model';
+import * as controller  from './controller';
+import { InternalServerError } from '../../errors';
 const router = Router();
 
 
-router.get("/", (req:Request, res:Response) => {
-    let conceptos = Conceptos.find((err: any, conceptos: any) => {
-        if (err) {
-            return res.status(500).json({message:"error 500"});
-        } else {
-            return res.status(200).json({message:"all conceptos",conceptos:conceptos});
-        }
-    });
-});
-
-router.post("/", (req:Request, res:Response) => {
+router.get("/", async (req:Request, res:Response):Promise<Response> => {
     try {
-        //let { message, response, code } = await controller.get(req.query);
-        return res.status(200).json({message:"created"});
+        let { message, response, code } = await controller.get(req.query);
+        return res.status(code).json(message || response);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({message:"error 500"});
+        return res.
+            status(InternalServerError.code).
+            json({message:InternalServerError.message});
     }
 });
 
-/*export let addConcept = (req: Request, res: Response) => {
-  res.send("Returns one book");
-};*/
+router.post("/", async (req:Request, res:Response):Promise<Response> => {
+    try {
+        let { message, response, code } = await controller.created(req.body);
+        return res.status(code).json(message || response);
+    } catch (error) {
+        console.log(error);
+        return res.
+            status(InternalServerError.code).
+            json({message:InternalServerError.message});
+    }
+});
+
+router.get("/:id", async (req:Request, res:Response):Promise<Response> => {
+    let {id} = req.params;
+    try {
+        let { message, response, code } = await controller.getOne(id);
+        return res.status(code).json(message || response);
+    } catch (error) {
+        console.log(error);
+        return res.
+            status(InternalServerError.code).
+            json({message:InternalServerError.message});
+    }
+});
+
+router.delete("/:id", async (req:Request, res:Response):Promise<Response> => {
+    let {id} = req.params ;
+    try {
+        let { message, response, code } = await controller.deleteOne(id);
+        return res.status(code).json(message || response);
+    }catch (error) {
+        console.log(error);
+        return res.
+            status(InternalServerError.code).
+            json({message:InternalServerError.message});
+    }
+});
+
+router.post("/:id",async (req:Request, res:Response):Promise<Response> => {
+    try {
+        let {id} = req.params;
+        let {data} = req.body;
+        let { message, response, code } = await controller.update(id,data);
+        return res.status(code).json(message || response);
+    }catch(error) {
+        console.log(error);
+        return res.
+            status(InternalServerError.code).
+            json({message:InternalServerError.message});
+    }
+});
+
 
 export default router;

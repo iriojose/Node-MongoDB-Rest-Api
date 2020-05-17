@@ -6,7 +6,8 @@
     "scripts": {
         "start": "node server/api/dist/index.js",
         "build": "tsc -p ./server/api/tsconfig.json",
-        "clean": "rimraf ./server/api/dist"
+        "clean": "rimraf ./server/api/dist",
+        "serve": "concurrently \"tsc -w\" \"nodemon server/api/dist/index.js "
     },
     "author": "Irio Gómez",
     "license": "ISC",
@@ -17,6 +18,8 @@
         "@types/mongoose": "^5.7.20",
         "@types/morgan": "^1.9.0",
         "@types/multer": "^1.4.3",
+        "bcryptjs": "^2.4.3",
+        "concurrently": "^5.2.0",
         "cors": "^2.8.5",
         "cross-env": "^7.0.2",
         "dotenv": "^8.2.0",
@@ -24,6 +27,7 @@
         "mongoose": "^5.9.14",
         "morgan": "^1.10.0",
         "multer": "^1.4.2",
+        "nodemon": "^2.0.4",
         "rimraf": "^3.0.2",
         "typescript": "^3.9.2"
     }
