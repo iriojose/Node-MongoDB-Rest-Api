@@ -7,6 +7,7 @@
         "start": "node server/api/dist/index.js",
         "build": "tsc -p ./server/api/tsconfig.json",
         "clean": "rimraf ./server/api/dist",
+        "test": "jest",
         "serve": "concurrently \"tsc -w\" \"nodemon server/api/dist/index.js "
     },
     "author": "Irio Gómez",
@@ -25,11 +26,14 @@
         "cross-env": "^7.0.2",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "jest": "^26.0.1",
         "mongoose": "^5.9.14",
         "morgan": "^1.10.0",
         "multer": "^1.4.2",
         "nodemon": "^2.0.4",
         "rimraf": "^3.0.2",
+        "supertest": "^4.0.2",
+        "ts-jest": "^26.0.0",
         "typescript": "^3.9.2"
     }
 }

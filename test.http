@@ -1,0 +1,9 @@
+## New extended consult
+GET http://localhost:81/api/conceptos
+x-access-control : {"user":"admin","password":"123456"}
+
+
+## Total prueba
+GET http://localhost:81/api/conceptos/1
+x-access-control : {"user":"admin","password":"123456"}
+
