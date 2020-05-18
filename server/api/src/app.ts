@@ -10,6 +10,7 @@ dotenv.config();
 export class App {
     public app: Application;
 
+    //construct the application
     constructor(private port?: number | string) {
         this.app = express();
         this.settings();
@@ -17,14 +18,18 @@ export class App {
         this.routes();
     }
 
+    //setting port
     private settings() {
         this.app.set('port', this.port || process.argv[2] || process.env.API_PORT || 81);
     }
 
+    //connection to the db (mongoDB)
     private connection() {
         const db = new DB();
         db.listen();
     }
+
+    //middlewares 
     private middlewares() {
         this.app.use(cors({ exposedHeaders: 'Authorization' }));
         this.app.use(morgan("dev"));

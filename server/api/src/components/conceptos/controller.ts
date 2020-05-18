@@ -1,16 +1,19 @@
-import conceptos from './model';
+import model from './model';
 import * as respuestas from '../../errors';
 
+//get all concepts
 export const get = async (query: any): Promise<any> => {
     try {
-        let data = await conceptos.find((err: any, conceptos:any) => {
+        //let { fields, limit, offset, order} = query;
+        
+        let data = await model.find((err: any, response:any) => {
             if (err) return respuestas.InternalServerError;
-        });
+        }).sort({ _id: -1 });
         
         let count = data.length;
         if (count <= 0) return respuestas.Empty;
         
-        let totalCount = await conceptos.countDocuments((err:any,count:number) => {
+        let totalCount = await model.countDocuments((err:any,count:number) => {
             if (err) return respuestas.InternalServerError;
         });
 
@@ -23,12 +26,13 @@ export const get = async (query: any): Promise<any> => {
     }
 }
 
+//create new concept
 export const created = async (body:any):Promise<any> => {
     try {
         let {data} = body;
         data = typeof data == 'string' ? JSON.parse(data) : data;
-        const concepto = new conceptos(data);
-        await concepto.save((err:any,product:any) => {
+        const concepto = new model(data);
+        await concepto.save((err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
         });
 
@@ -41,9 +45,10 @@ export const created = async (body:any):Promise<any> => {
     }
 }
 
+//get one concept
 export const getOne = async (id:any):Promise<any> => {
     try {
-        let concepto = await conceptos.findById(id, (err:any) => {
+        let concepto = await model.findById(id, (err:any) => {
             if (err) return respuestas.InternalServerError;
         });
         if (!concepto) return respuestas.ElementNotFound;
@@ -57,9 +62,10 @@ export const getOne = async (id:any):Promise<any> => {
     } 
 }
 
+//delete one concept
 export const deleteOne = async (id:any):Promise<any> => {
     try {   
-        await conceptos.findByIdAndDelete(id, (err:any) => {
+        await model.findByIdAndDelete(id, (err:any) => {
             if (err) return respuestas.InternalServerError;
         });
         let response = Object.assign({  message: respuestas.Deleted.message});
@@ -71,9 +77,10 @@ export const deleteOne = async (id:any):Promise<any> => {
     }
 }
 
+//update one concept
 export const update = async (id:any,data:any):Promise<any> => {
     try {   
-        let concepto = await conceptos.findByIdAndUpdate({"_id":id},data,(err:any,response:any) => {
+        let concepto = await model.findByIdAndUpdate({"_id":id},data,(err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
         });
         let response = Object.assign({ message: respuestas.Update.message,concepto});

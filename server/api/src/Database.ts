@@ -16,6 +16,7 @@ export class DB {
         }).catch(err => console.log(err));
     }
 
+    //connection to db
     public listen(){
         this.connectToDB();
     }

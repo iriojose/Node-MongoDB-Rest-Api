@@ -2,6 +2,7 @@ import {Request,Response,NextFunction} from 'express';
 import model from '../components/usuario/model';
 import bcrypt from 'bcryptjs';
 
+//verify access to the api 
 export async function validar(req:Request,res:Response,next:NextFunction){
     console.log(`[DATE] ${new Date()}`);
     let head:string = req.headers['x-access-control'] as string ;
@@ -22,11 +23,13 @@ export async function validar(req:Request,res:Response,next:NextFunction){
     }
 }
 
+//encript password
 export async function encrypt(password:any){
     let salt = await bcrypt.genSalt(10);
     return await bcrypt.hash(password,salt);
 }
 
+//compare password
 export async function compare(password:any,othePassword:any){
     return await bcrypt.compare(password,othePassword);
 }
