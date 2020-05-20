@@ -83,6 +83,9 @@ export const update = async (id:any,data:any):Promise<any> => {
         let deposito = await model.findByIdAndUpdate({"_id":id},data,(err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
         });
+        
+        if (!deposito) return respuestas.ElementNotFound;
+
         let response = Object.assign({ message: respuestas.Update.message,deposito});
         return { response, code: respuestas.Update.code };
     }catch (error) {
