@@ -43,9 +43,10 @@ export const created = async (body:any):Promise<any> => {
 
         await usuario.save((err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
+            else usuario = response;
         });
 
-        let response = { message: respuestas.Created.message ,data:data};
+        let response = { message: respuestas.Created.message ,data:usuario};
         return { response, code: respuestas.Created.code };
     }catch (error) {
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;

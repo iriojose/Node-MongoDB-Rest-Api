@@ -29,12 +29,13 @@ export const created = async (body:any):Promise<any> => {
     try {
         let {data} = body;
         data = typeof data == 'string' ? JSON.parse(data) : data;
-        const subgrupo = new model(data);
-        let newSubgrupo = await subgrupo.save((err:any) => {
+        let subgrupo = new model(data);
+        await subgrupo.save((err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
+            else subgrupo = response;
         });
 
-        let response = { message: respuestas.Created.message ,data:newSubgrupo};
+        let response = { message: respuestas.Created.message ,data:subgrupo};
         return { response, code: respuestas.Created.code };
     }catch (error) {
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;

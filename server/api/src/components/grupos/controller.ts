@@ -29,12 +29,13 @@ export const created = async (body:any):Promise<any> => {
     try {
         let {data} = body;
         data = typeof data == 'string' ? JSON.parse(data) : data;
-        const grupo = new model(data);
-        let newGrupo = await grupo.save((err:any) => {
+        let grupo = new model(data);
+        await grupo.save((err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
+            else grupo = response;
         });
 
-        let response = { message: respuestas.Created.message ,data:newGrupo};
+        let response = { message: respuestas.Created.message ,data:grupo};
         return { response, code: respuestas.Created.code };
     }catch (error) {
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
@@ -63,9 +64,11 @@ export const getOne = async (id:any):Promise<any> => {
 //delete one group
 export const deleteOne = async (id:any):Promise<any> => {
     try {   
-        await model.findByIdAndDelete(id, (err:any) => {
+        await model.findByIdAndDelete(id, (err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
+            if (response) return respuestas.ElementNotFound;
         });
+
         let response = Object.assign({  message: respuestas.Deleted.message});
         return {code: respuestas.Deleted.code, response };
     }catch(error) {
@@ -78,12 +81,12 @@ export const deleteOne = async (id:any):Promise<any> => {
 //update one group
 export const update = async (id:any,data:any):Promise<any> => {
     try {   
-        let grupo = await model.findByIdAndUpdate({"_id":id},data,(err:any,response:any) => {
+        let grupo = await model.findByIdAndUpdate({"_id":id},data,(err:any) => {
             if (err) return respuestas.InternalServerError;
         });
 
         if (!grupo) return respuestas.ElementNotFound;
-        
+
         let response = Object.assign({ message: respuestas.Update.message,grupo});
         return { response, code: respuestas.Update.code };
     }catch (error) {

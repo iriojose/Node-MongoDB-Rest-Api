@@ -31,12 +31,13 @@ export const created = async (body:any):Promise<any> => {
     try {
         let {data} = body;
         data = typeof data == 'string' ? JSON.parse(data) : data;
-        const deposito = new model(data);
+        let deposito = new model(data);
         await deposito.save((err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
+            else deposito = response;
         });
 
-        let response = { message: respuestas.Created.message ,data:data};
+        let response = { message: respuestas.Created.message ,data:deposito};
         return { response, code: respuestas.Created.code };
     }catch (error) {
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
