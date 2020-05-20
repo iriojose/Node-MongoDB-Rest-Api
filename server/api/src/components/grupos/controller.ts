@@ -64,10 +64,13 @@ export const getOne = async (id:any):Promise<any> => {
 //delete one group
 export const deleteOne = async (id:any):Promise<any> => {
     try {   
+        let data = null;
         await model.findByIdAndDelete(id, (err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
-            if (response) return respuestas.ElementNotFound;
+            else data = response;
         });
+
+        if (!data) return respuestas.ElementNotFound;
 
         let response = Object.assign({  message: respuestas.Deleted.message});
         return {code: respuestas.Deleted.code, response };
