@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 
 export const DepositoSchema = new mongoose.Schema({
     nombre:{ type: String, required: true },
-    usuario_id:{type: Number, required: false },
+    usuario_id:{type: String || Number, required: false , default:null},
 },{
     timestamps:true
 });

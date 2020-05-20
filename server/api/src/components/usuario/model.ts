@@ -3,17 +3,17 @@ import * as mongoose from "mongoose";
 export const UsuarioSchema = new mongoose.Schema({
     nombre:{ type: String, required: true },
     apellido:{ type: String, required: true },
-    login:{ type: String, required: true },
+    login:{ type: String, required: true, unique:true},
     password:{ type: String, required: true },
-    perfil_id:{ type: Number, required: true },
+    perfil_id:{ type:String || Number, required: true },
     email:{ type: String, required: true ,unique:true},
-    tema:{ type: String, required: false },
-    app_ajax:{type: Number, required: false },
-    datagrid:{type: Number, required: false },
-    imagen:{type: String, required: false },
-    pool:{type: String, required: false },
-    caja_id:{type: Number, required: false },
-    vendedor_id:{type: Number, required: false }
+    tema:{ type: String, required: false ,default:null},
+    app_ajax:{type: Number, required: false ,default:null},
+    datagrid:{type: Number, required: false ,default:null},
+    imagen:{type: String, required: false ,default:'default.png'},
+    pool:{type: String, required: false ,default:null},
+    caja_id:{type:String || Number, required: false ,default:null},
+    vendedor_id:{type:String || Number, required: false ,default:null}
 },{
     timestamps:true
 });

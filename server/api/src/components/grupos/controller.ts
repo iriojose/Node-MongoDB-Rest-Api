@@ -19,7 +19,7 @@ export const get = async (query: any): Promise<any> => {
         return { response, code: respuestas.Ok.code };
     } catch (error) {
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Conceptos, error: ${error}`);
+        console.log(`Error en el controlador Grupos, error: ${error}`);
         return respuestas.InternalServerError;
     }
 }
@@ -38,7 +38,7 @@ export const created = async (body:any):Promise<any> => {
         return { response, code: respuestas.Created.code };
     }catch (error) {
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Conceptos, error: ${error}`);
+        console.log(`Error en el controlador Grupos, error: ${error}`);
         return respuestas.InternalServerError;
     }
 }
@@ -55,7 +55,7 @@ export const getOne = async (id:any):Promise<any> => {
         return { response, code: respuestas.Ok.code };
     }catch (error){
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Conceptos, error: ${error}`);
+        console.log(`Error en el controlador Grupos, error: ${error}`);
         return respuestas.InternalServerError;
     } 
 }
@@ -70,7 +70,7 @@ export const deleteOne = async (id:any):Promise<any> => {
         return {code: respuestas.Deleted.code, response };
     }catch(error) {
         if (error.message === 'DB_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Conceptos, error: ${error}`);
+        console.log(`Error en el controlador Grupos, error: ${error}`);
         return respuestas.InternalServerError;
     }
 }
@@ -85,7 +85,7 @@ export const update = async (id:any,data:any):Promise<any> => {
         return { response, code: respuestas.Update.code };
     }catch (error) {
         if (error.message === 'DB_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Conceptos, error: ${error}`);
+        console.log(`Error en el controlador Grupos, error: ${error}`);
         return respuestas.InternalServerError;
     }
 }

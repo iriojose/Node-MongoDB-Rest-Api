@@ -1,18 +1,17 @@
 import model from './model';
 import * as respuestas from '../../errors';
-import {encrypt} from '../../helpers/authentication';
 
-//get all users
+//get all subgroups
 export const get = async (query: any): Promise<any> => {
     try {
-        let data = await model.find((err: any, response:any) => {
+        let data = await model.find((err: any) => {
             if (err) return respuestas.InternalServerError;
-        });
+        }); 
         
         let count = data.length;
         if (count <= 0) return respuestas.Empty;
         
-        let totalCount = await model.countDocuments((err:any,count:number) => {
+        let totalCount = await model.countDocuments((err:any) => {
             if (err) return respuestas.InternalServerError;
         });
 
@@ -20,58 +19,48 @@ export const get = async (query: any): Promise<any> => {
         return { response, code: respuestas.Ok.code };
     } catch (error) {
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Usuario, error: ${error}`);
+        console.log(`Error en el controlador Subgrupos, error: ${error}`);
         return respuestas.InternalServerError;
     }
 }
 
-//created new user (expected sign in)
+//create new subgroup
 export const created = async (body:any):Promise<any> => {
     try {
         let {data} = body;
         data = typeof data == 'string' ? JSON.parse(data) : data;
-        
-        //check if the email is in use
-        model.findOne({email:data.email}, (err:any) => {
-            if (err) return respuestas.InternalServerError;
-            else return { message: "this email already in use."}
-        });
-        
-        //encript password 
-        data.password = await encrypt(data.password);
-        let usuario = new model(data);
-
-        await usuario.save((err:any,response:any) => {
+        const subgrupo = new model(data);
+        let newSubgrupo = await subgrupo.save((err:any) => {
             if (err) return respuestas.InternalServerError;
         });
 
-        let response = { message: respuestas.Created.message ,data:data};
+        let response = { message: respuestas.Created.message ,data:newSubgrupo};
         return { response, code: respuestas.Created.code };
     }catch (error) {
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Usuario, error: ${error}`);
+        console.log(`Error en el controlador Subgrupos, error: ${error}`);
         return respuestas.InternalServerError;
     }
 }
 
-//get one user
+//get one subgroup
 export const getOne = async (id:any):Promise<any> => {
     try {
-        let data = await model.findById(id, (err:any) => {
+        let subgrupo = await model.findById(id, (err:any) => {
             if (err) return respuestas.InternalServerError;
         });
-        if (!data) return respuestas.ElementNotFound;
+        if (!subgrupo) return respuestas.ElementNotFound;
 
-        let response = Object.assign({data});
+        let response = Object.assign({subgrupo});
         return { response, code: respuestas.Ok.code };
     }catch (error){
         if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Usuario, error: ${error}`);
+        console.log(`Error en el controlador Subgrupos, error: ${error}`);
         return respuestas.InternalServerError;
     } 
 }
 
-//delete one user
+//delete one subgroup
 export const deleteOne = async (id:any):Promise<any> => {
     try {   
         await model.findByIdAndDelete(id, (err:any) => {
@@ -81,22 +70,22 @@ export const deleteOne = async (id:any):Promise<any> => {
         return {code: respuestas.Deleted.code, response };
     }catch(error) {
         if (error.message === 'DB_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Usuario, error: ${error}`);
+        console.log(`Error en el controlador Subgrupos, error: ${error}`);
         return respuestas.InternalServerError;
     }
 }
 
-//update one user
+//update one subgroup
 export const update = async (id:any,data:any):Promise<any> => {
     try {   
-        let usuario = await model.findByIdAndUpdate({"_id":id},data,(err:any,response:any) => {
+        let subgrupo = await model.findByIdAndUpdate({"_id":id},data,(err:any,response:any) => {
             if (err) return respuestas.InternalServerError;
         });
-        let response = Object.assign({ message: respuestas.Update.message,usuario});
+        let response = Object.assign({ message: respuestas.Update.message,subgrupo});
         return { response, code: respuestas.Update.code };
     }catch (error) {
         if (error.message === 'DB_SYNTAX_ERROR') return respuestas.BadRequest;
-        console.log(`Error en el controlador Usuario, error: ${error}`);
+        console.log(`Error en el controlador Subgrupos, error: ${error}`);
         return respuestas.InternalServerError;
     }
 }
