@@ -4,7 +4,8 @@
     "description": "Rest-Api-node-mongoDB",
     "main": "index.js",
     "scripts": {
-        "start": "node server/api/dist/index.js",
+        "dev":"node server/api/dist/index.js",
+        "start": "npm run build && node server/api/dist/index.js",
         "build": "tsc -p ./server/api/tsconfig.json",
         "clean": "rimraf ./server/api/dist",
         "test": "jest",
