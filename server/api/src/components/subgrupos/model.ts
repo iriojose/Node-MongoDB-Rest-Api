@@ -5,7 +5,7 @@ export const SubgruposSchema = new mongoose.Schema({
     grupos_id:{type:String || Number ,required:true},
     visualizar:{ type: String, required: false ,default:1},
     posicion:{ type: String, required: false,default:1 },
-    imagen:{ type: String, required: true ,default:'default.png'},
+    imagen:{ type: String, required: false ,default:'default.png'},
 },{
     timestamps:true
 });
