@@ -4,10 +4,10 @@ import * as respuestas from '../../errors';
 //get all subgroups
 export const get = async (query: any): Promise<any> => {
     try {
-        let data = await model.find((err: any) => {
+        let data = await model.find((err:any) => {
             if (err) return respuestas.InternalServerError;
         }); 
-        
+       
         let count = data.length;
         if (count <= 0) return respuestas.Empty;
         

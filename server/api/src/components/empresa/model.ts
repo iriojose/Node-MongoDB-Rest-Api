@@ -1,11 +1,9 @@
 import * as mongoose from "mongoose";
 
 export const EmpresaSchema = new mongoose.Schema({
-
     rif:{type:String,required:true,unique:true},
     nombre:{type:String,required:true},
     razon_social:{type:String,required:false,default:null},
-    fecha_registro:{type:Date,required:false,default:Date.now},
     direccion:{type:String,required:true},
     telefono1:{type:String,required:true},
     telefono2:{type:String,required:false,default:null},
@@ -21,8 +19,7 @@ export const EmpresaSchema = new mongoose.Schema({
     licencia_licores:{type:Boolean,required:false,default:false},
     nota:{type:String,required:false,default:null},
     modelo:{type:Number,required:false,default:1},
-    serial_disk:{type:String,required:false,default:null},
-    
+    serial_disk:{type:String,required:false,default:null}
 },{
     timestamps:true
 });

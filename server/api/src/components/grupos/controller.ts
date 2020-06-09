@@ -98,3 +98,25 @@ export const update = async (id:any,data:any):Promise<any> => {
         return respuestas.InternalServerError;
     }
 }
+
+//get subgroups
+export const getSubgroups = async (id:any,query:any): Promise<any> => {
+    try {
+        let data = await model.findById(id).
+        
+        
+        let count = data.length;
+        if (count <= 0) return respuestas.Empty;
+        
+        let totalCount = await model.countDocuments((err:any) => {
+            if (err) return respuestas.InternalServerError;
+        });
+
+        let response = Object.assign({totalCount,count,data});
+        return { response, code: respuestas.Ok.code };
+    } catch (error) {
+        if (error.message === 'BD_SYNTAX_ERROR') return respuestas.BadRequest;
+        console.log(`Error en el controlador Grupos, error: ${error}`);
+        return respuestas.InternalServerError;
+    }
+}
